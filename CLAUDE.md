@@ -42,8 +42,9 @@ Taxa mensal = (1 + taxa anual)^(1/12) − 1.
 
 ## Autenticação e banco (Supabase)
 - Biblioteca `@supabase/supabase-js` via CDN. Projeto: `https://wrdxqdprndpqnbveeoxn.supabase.co` (Publishable Key no `index.html`).
-- Tela de acesso antes do planejador: abas "Entrar" e "Criar Conta" (Nome, E-mail, Senha) com `signInWithPassword`, `signUp` e `signOut`; mensagens de erro em português.
-- Barra do usuário no topo: nome/e-mail, "Minhas Simulações" e "Sair".
+- **Acesso direto, sem login obrigatório:** visitante deslogado vê direto a Tela 1 (tag "Simulador Gratuito • Leva 2 Minutos", título "Projete sua independência financeira etapa por etapa", Nome + Idade + "Continuar →", tudo visível sem rolagem em 1366x768). Só há um botão discreto "Entrar" no canto superior direito.
+- Cadastro/login (abas "Entrar" e "Criar Conta": Nome, E-mail, Senha; `signInWithPassword`, `signUp`, `signOut`; erros em português) só é pedido ao clicar em "Entrar" ou em "Salvar Simulação" estando deslogado; depois do acesso o usuário volta ao simulador com os valores mantidos (e o formulário de salvar abre).
+- Barra do usuário (logado): nome/e-mail, "Minhas Simulações" e "Sair".
 - "Salvar Simulação" grava em `simulacoes` com `user_id` do usuário logado, `nome`, `contato`, `patrimonio_final_brl` e `dados_simulacao` (JSON completo).
 - "Minhas Simulações" faz `select` filtrado por `user_id`, do mais recente ao mais antigo; clicar numa carrega todos os valores nos campos.
 - Pré-requisito no banco: rodar `supabase-setup.sql` (coluna `user_id`, `created_at` e policies RLS).
