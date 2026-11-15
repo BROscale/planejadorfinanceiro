@@ -49,6 +49,6 @@ Taxa mensal = (1 + taxa anual)^(1/12) − 1.
 - Pré-requisito no banco: rodar `supabase-setup.sql` (coluna `user_id`, `created_at` e policies RLS).
 
 ## Publicação (Git/GitHub)
-- Repositório remoto: https://github.com/sallumluiz/planejadorfinanceiro.git (remote `origin`, branch `main`).
+- Repositório remoto: https://github.com/BROscale/planejadorfinanceiro.git (remote `origin`, branch `main`).
 - **Sempre que o usuário pedir para atualizar ou publicar o site, fazer commit e push direto para a branch `main`** (sem criar branch nem PR).
 - Git instalado em `C:\Program Files\Git\cmd\git.exe` (pode não estar no PATH de sessões já abertas).
