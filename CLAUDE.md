@@ -1,6 +1,6 @@
 # Planejador Financeiro por Etapas da Vida
 
-Produto web leve em **um único arquivo `index.html`** (HTML + CSS + JavaScript puro; Tailwind, fonte, Supabase e PostHog via CDN/snippet; sem build, sem instalação). Imagens ao lado do arquivo: `fase-40.jpg`, `fase-50.jpg`, `fase-60.jpg`, `og-image.png`, `favicon.png`.
+Produto web leve em **um único arquivo `index.html`** (HTML + CSS + JavaScript puro; Tailwind, fonte, Supabase e PostHog via CDN/snippet; sem build, sem instalação). Imagens ao lado do arquivo: `fase-40.jpg`, `fase-50.jpg`, `fase-60.jpg` (900px de largura, qualidade ~82, < 250 KB cada; ao trocar, manter esse padrão e usar caminhos relativos `./arquivo`), `og-image.png`, `favicon.png`. Obs.: o painel de pré-visualização do app mostra arquivos locais como `data:` e por isso não carrega imagens relativas; abra o `index.html` no navegador ou use o site publicado para vê-las.
 
 ## Funil guiado (wizard) — uma pergunta por tela
 Barra de progresso ("Passo X de 4") nos passos 1–4, com botões "Voltar" e "Continuar →". Enter avança.
@@ -24,7 +24,7 @@ Barra de progresso ("Passo X de 4") nos passos 1–4, com botões "Voltar" e "Co
 
 ## Ações finais
 - **Salvar meu teste:** logado → grava direto em `simulacoes`; deslogado → abre Criar Conta/Entrar e, após o acesso, salva automaticamente. Toast "Simulação salva com sucesso!".
-- **Falar com um especialista:** abre `SPECIALIST_URL` (constante no JS; hoje `https://wa.me/`, **configurar** com WhatsApp `https://wa.me/55DDDNUMERO` ou link de calendário) com `text=` pré-preenchido (nome, patrimônio em R$ e em US$).
+- **Falar com um especialista:** abre `SPECIALIST_URL` (constante no JS; hoje `https://wa.me/5521988108887`; pode ser trocada por outro WhatsApp ou link de calendário) com `text=` pré-preenchido (nome, patrimônio em R$ e em US$).
 - **Recomeçar o teste:** limpa o estado e volta ao passo 1.
 
 ## Supabase
