@@ -1,53 +1,41 @@
 # Planejador Financeiro por Etapas da Vida
 
-Produto web leve em **um único arquivo `index.html`** (HTML + CSS + JavaScript puro, sem dependências, sem build, sem instalação). Basta abrir no navegador.
+Produto web leve em **um único arquivo `index.html`** (HTML + CSS + JavaScript puro; Tailwind, fonte, Supabase e PostHog via CDN/snippet; sem build, sem instalação). Imagens ao lado do arquivo: `fase-40.jpg`, `fase-50.jpg`, `fase-60.jpg`, `og-image.png`, `favicon.png`.
 
-## Tela 1 – Entrada inicial
-- Campos: **Nome** e **Idade atual**.
-- Botão **Continuar** abre a Tela 2 exibindo apenas as etapas da vida RESTANTES:
-  - **Etapa 1:** até 35 anos. Duração = 35 − idade atual.
-  - **Etapa 2:** dos 35 aos 60 anos. Duração = 25 anos (ou 60 − idade atual se a pessoa entrar direto nela).
-  - **Etapa 3:** dos 60 aos 85 anos. Duração = 25 anos (ou 85 − idade atual se a pessoa entrar direto nela).
-- Idade < 35 → etapas 1, 2, 3; 35 a 59 → etapas 2, 3; 60 a 84 → etapa 3; 85+ → nenhuma etapa restante (aviso).
+## Funil guiado (wizard) — uma pergunta por tela
+Barra de progresso ("Passo X de 4") nos passos 1–4, com botões "Voltar" e "Continuar →". Enter avança.
 
-## Tela 2 – Calculadora com etapas em cascata
-- Topo da página: apenas a saudação com o nome. **Não há cotação global**; cada etapa tem a sua.
-- Cada etapa restante é um **card amplo** com fluxo contábil **ABERTURA → PREMISSAS/APORTES → FECHAMENTO**:
-  - **Topo do card:** avatar SVG (Jovem até 35; Adulto grisalho 35–60; Sênior 60+), título do período e badge de duração em anos. Sem painel de consolidado aqui.
-  - **Bloco 1 — Abertura do Período:**
-    - Primeira etapa ativa: campos editáveis **Patrimônio Atual em Ações (R$)** e **em Renda Fixa (R$)**.
-    - Etapas seguintes: campos bloqueados (somente leitura) herdados do Fechamento da etapa anterior, separados em Ações BR (R$), Renda Fixa BR (R$), Ações EUA (US$) e Renda Fixa EUA (US$).
-  - **Bloco 2 — Premissas e Poupança Mensal da Etapa:**
-    - **Cotação do Dólar nesta etapa (R$)**, editável, padrão 5,50. O saldo em USD herdado continua rendendo em dólar; apenas os novos aportes mensais em R$ destinados ao exterior são convertidos com a cotação desta etapa.
-    - Total Poupança Líquida Mensal (R$)
-    - % Investido em Dólar (0–100%, passo 10) e % Investido em R$ (travado = 100 − % Dólar)
-    - % do Dólar em Ações EUA (passo 10) e % em Renda Fixa EUA (travado = 100 − Ações)
-    - % do R$ em Ações Brasil (passo 10) e % em Renda Fixa Brasil (travado = 100 − Ações)
-  - **Bloco 3 — Fechamento do Período (só no rodapé do card):** painel de destaque "Fechamento do Período — Consolidado ao Final da Etapa" com Patrimônio Consolidado em R$ e em USD. Os saldos finais alimentam a Abertura da etapa seguinte.
+1. **Home:** tag "Simulador Gratuito • Leva 2 Minutos", título "Projete sua independência financeira etapa por etapa", subtítulo "Estamos aqui para simplificar sua independência financeira, sem planilhas complexas você vai planejar sua aposentadoria.", campos **Nome** e **Idade atual**. Deve caber em 1366x768 sem rolagem. Visitante entra direto, sem login; botão discreto "Entrar" no canto superior direito.
+2. **Patrimônio atual:** Patrimônio Atual Total no Brasil (Ações, Renda Fixa e Cripto) em **R$** e fora do Brasil em **US$**. Máscara monetária; zero permitido.
+3. **Poupança mensal:** "Quanto você consegue poupar por mês? (em R$)", máscara monetária.
+4. **Perfil de investidor:** 2 cards — **Muito Conservador** (100% Renda Fixa) e **Moderado** (80% Renda Fixa + 20% Ações no Brasil). Obrigatório escolher.
+5. **Transição:** animação de cálculo (2,5 s ou botão "Ver meu resultado") com a mensagem "Agora deixa com a gente. Você quer ter mais conforto e tranquilidade na próxima etapa da sua vida. A gente tá aqui pra te mostrar o que te espera."
+6. **Resultado (próximos 15 anos):** `idadeFinal = idadeAtual + 15`; imagem: `idadeFinal <= 44` → `fase-40.jpg`; 45–54 → `fase-50.jpg`; `>= 55` → `fase-60.jpg`. Título "Nos seus {idadeFinal} anos de idade:", bloco **Patrimônio no Brasil (R$)**, bloco **Patrimônio no Exterior (USD)**, resumo: Patrimônio Total Consolidado (US$ 1 = R$ 6,30) e Nível de Dolarização (% do patrimônio em dólar). Botões: **Salvar meu teste**, **Falar com um especialista**, **Recomeçar o teste**.
 
-## Premissas de rentabilidade anual (juros compostos mês a mês)
-- Renda Fixa Brasil: 10% a.a.
-- Ações Brasil: 12% a.a.
-- Renda Fixa EUA (USD): 6% a.a.
-- Ações EUA (USD): 8% a.a.
-
-Taxa mensal = (1 + taxa anual)^(1/12) − 1.
-
-## Convenções de cálculo
-- Todo cálculo atualiza em tempo real a cada alteração de qualquer campo.
-- A cada mês: saldos rendem e, ao final do mês, entra o aporte. Parcela em dólar do aporte = (aporte × %Dólar) ÷ cotação da etapa, investida em USD.
-- Patrimônio inicial informado na 1ª etapa é tratado como R$ (Brasil).
-- Fechamento: Consolidado R$ = saldos R$ + saldos USD × cotação da etapa; Consolidado USD = Consolidado R$ ÷ cotação da etapa. Os saldos herdados passam à etapa seguinte nas suas moedas de origem (R$ e USD separados).
+## Motor de cálculo (função pura `simular`, 180 meses)
+- Câmbio fixo USD/BRL = **6,30**.
+- Poupança mensal: 50% fica em BRL no Brasil; 50% é convertido para USD (`(poupança × 0,5) / 6,30`) todo mês.
+- Exterior (USD): **7% a.a.** (independe do perfil).
+- Brasil (BRL): Muito Conservador = **10% a.a.**; Moderado = 20% × 12% + 80% × 10% = **10,4% a.a.**
+- Taxa mensal: `Math.pow(1 + r_anual, 1/12) - 1`. Cada carteira iterada separadamente: `saldo = saldo * (1 + r_mensal) + aporte` (aporte ao final do mês).
+- Patrimônio inicial em R$ entra na carteira Brasil; o em US$ entra na carteira exterior.
+- Total consolidado em R$ = finalBRL + finalUSD × 6,30; dolarização = finalUSD × 6,30 ÷ total.
 - Simulação ilustrativa, não é recomendação de investimento.
 
-## Autenticação e banco (Supabase)
-- Biblioteca `@supabase/supabase-js` via CDN. Projeto: `https://wrdxqdprndpqnbveeoxn.supabase.co` (Publishable Key no `index.html`).
-- **Acesso direto, sem login obrigatório:** visitante deslogado vê direto a Tela 1 (tag "Simulador Gratuito • Leva 2 Minutos", título "Projete sua independência financeira etapa por etapa", Nome + Idade + "Continuar →", tudo visível sem rolagem em 1366x768). Só há um botão discreto "Entrar" no canto superior direito.
-- Cadastro/login (abas "Entrar" e "Criar Conta": Nome, E-mail, Senha; `signInWithPassword`, `signUp`, `signOut`; erros em português) só é pedido ao clicar em "Entrar" ou em "Salvar Simulação" estando deslogado; depois do acesso o usuário volta ao simulador com os valores mantidos (e o formulário de salvar abre).
-- Barra do usuário (logado): nome/e-mail, "Minhas Simulações" e "Sair".
-- "Salvar Simulação" grava em `simulacoes` com `user_id` do usuário logado, `nome`, `contato`, `patrimonio_final_brl` e `dados_simulacao` (JSON completo).
-- "Minhas Simulações" faz `select` filtrado por `user_id`, do mais recente ao mais antigo; clicar numa carrega todos os valores nos campos.
-- Pré-requisito no banco: rodar `supabase-setup.sql` (coluna `user_id`, `created_at` e policies RLS).
+## Ações finais
+- **Salvar meu teste:** logado → grava direto em `simulacoes`; deslogado → abre Criar Conta/Entrar e, após o acesso, salva automaticamente. Toast "Simulação salva com sucesso!".
+- **Falar com um especialista:** abre `SPECIALIST_URL` (constante no JS; hoje `https://wa.me/`, **configurar** com WhatsApp `https://wa.me/55DDDNUMERO` ou link de calendário) com `text=` pré-preenchido (nome, patrimônio em R$ e em US$).
+- **Recomeçar o teste:** limpa o estado e volta ao passo 1.
+
+## Supabase
+- `@supabase/supabase-js` via CDN. Projeto `https://wrdxqdprndpqnbveeoxn.supabase.co` (Publishable Key no `index.html`).
+- Login/cadastro (abas "Entrar" e "Criar Conta"; `signInWithPassword`, `signUp`, `signOut`; erros em português) só é pedido ao clicar em "Entrar" ou em "Salvar meu teste" deslogado.
+- Barra do usuário (logado): nome/e-mail, "Minhas Simulações" e "Sair". "Minhas Simulações" lista do mais recente ao mais antigo (`select` filtrado por `user_id`) e reabre o resultado salvo.
+- Linha gravada: `user_id`, `nome`, `contato` (e-mail da conta), `patrimonio_final_brl` (total consolidado) e `dados_simulacao` (`versao: 2` com `inputs`, `premissas`, `resultado`). Registros antigos (por etapas, sem `versao`) aparecem como "formato antigo" e não reabrem.
+- Pré-requisito: rodar `supabase-setup.sql` (coluna `user_id`, `created_at`, policies RLS).
+
+## Tracking (PostHog)
+Snippet no `<head>` (não alterar). Eventos: `step_1_completed`, `step_2_completed`, `step_3_completed`, `step_4_completed`, `simulation_viewed`, `cta_save_clicked`, `cta_specialist_clicked`, `cta_restart_clicked`. Propriedades: `perfil_investidor`, `idade_final`, `percentual_dolar`. **Nunca** enviar nome, e-mail ou valores de patrimônio/poupança.
 
 ## Publicação (Git/GitHub)
 - Repositório remoto: https://github.com/BROscale/planejadorfinanceiro.git (remote `origin`, branch `main`).
