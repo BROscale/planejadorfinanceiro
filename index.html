@@ -86,10 +86,10 @@
   <!-- Barra de progresso (passos 1 a 4) -->
   <div id="progress" class="mx-auto mt-4 max-w-2xl">
     <div class="mb-1.5 flex items-center justify-between text-xs font-bold text-slate-500">
-      <span id="progLabel">Passo 1 de 4</span><span id="progPct">25%</span>
+      <span id="progLabel">Passo 1 de 5</span><span id="progPct">20%</span>
     </div>
     <div class="h-2 w-full overflow-hidden rounded-full bg-slate-200">
-      <div id="progBar" class="h-full rounded-full bg-gradient-to-r from-blue-600 to-indigo-600 transition-all duration-500" style="width:25%"></div>
+      <div id="progBar" class="h-full rounded-full bg-gradient-to-r from-blue-600 to-indigo-600 transition-all duration-500" style="width:20%"></div>
     </div>
   </div>
 
@@ -220,8 +220,34 @@
     </div>
   </section>
 
-  <!-- PASSO 5 · Transição -->
-  <section id="step5" class="fade hidden mx-auto mt-10 max-w-xl text-center">
+  <!-- PASSO 5 · Renda passiva desejada -->
+  <section id="step5" class="fade hidden mx-auto mt-5 max-w-xl">
+    <div class="rounded-2xl border border-slate-200 bg-white p-6 shadow-xl shadow-slate-900/5">
+      <h2 class="text-2xl font-extrabold tracking-tight">Qual renda passiva mensal você gostaria de ter?</h2>
+      <p class="mt-1 text-sm text-slate-500">Considere valores de hoje — vamos calcular quanto você precisa poupar por mês para alcançar esse padrão de vida sem corroer seu patrimônio.</p>
+      <div class="mt-6">
+        <label for="renda" class="mb-1.5 block text-sm font-semibold text-slate-700">Renda passiva mensal desejada (em R$, valores de hoje)</label>
+        <div class="flex items-stretch overflow-hidden rounded-xl border border-slate-200 bg-white transition focus-within:border-blue-500 focus-within:ring-4 focus-within:ring-blue-100">
+          <span class="flex min-w-[3rem] items-center justify-center border-r border-slate-200 bg-slate-50 px-3 text-xs font-bold text-slate-500">R$</span>
+          <input id="renda" type="text" inputmode="numeric" autocomplete="off" placeholder="R$ 30.000" value="R$ 30.000,00" class="w-full min-w-0 bg-transparent px-3 py-3 text-base font-semibold outline-none placeholder-slate-400">
+        </div>
+        <div class="mt-3 flex flex-wrap gap-2" role="group" aria-label="Valores rápidos">
+          <button type="button" data-renda="15000" class="pill rounded-full border border-slate-200 bg-white px-4 py-1.5 text-sm font-bold text-slate-700 transition hover:border-blue-400">R$ 15 mil</button>
+          <button type="button" data-renda="30000" class="pill rounded-full border border-slate-200 bg-white px-4 py-1.5 text-sm font-bold text-slate-700 transition hover:border-blue-400">R$ 30 mil</button>
+          <button type="button" data-renda="60000" class="pill rounded-full border border-slate-200 bg-white px-4 py-1.5 text-sm font-bold text-slate-700 transition hover:border-blue-400">R$ 60 mil</button>
+          <button type="button" data-renda="100000" class="pill rounded-full border border-slate-200 bg-white px-4 py-1.5 text-sm font-bold text-slate-700 transition hover:border-blue-400">R$ 100 mil</button>
+        </div>
+        <p id="erro5" class="mt-3 text-sm font-medium text-rose-600 empty:hidden"></p>
+      </div>
+      <div class="mt-6 flex items-center justify-between gap-3">
+        <button type="button" data-back="step4" class="rounded-xl border border-slate-300 bg-white px-5 py-3 text-sm font-bold text-slate-700 shadow-sm transition hover:bg-slate-100">← Voltar</button>
+        <button type="button" id="next5" class="flex-1 sm:flex-none sm:px-10 rounded-xl bg-gradient-to-r from-blue-600 to-indigo-600 px-4 py-3 text-sm font-bold text-white shadow-lg shadow-blue-600/25 transition hover:brightness-110">Ver meu resultado →</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- PASSO 6 · Transição -->
+  <section id="step6" class="fade hidden mx-auto mt-10 max-w-xl text-center">
     <div class="rounded-2xl border border-slate-200 bg-white p-8 shadow-xl shadow-slate-900/5">
       <div class="mx-auto h-14 w-14 animate-spin rounded-full border-4 border-blue-100 border-t-blue-600" aria-hidden="true"></div>
       <p class="mt-6 text-lg sm:text-xl font-extrabold leading-snug tracking-tight">Agora deixa com a gente. Você quer ter mais conforto e tranquilidade na próxima etapa da sua vida. A gente tá aqui pra te mostrar o que te espera.</p>
@@ -231,8 +257,11 @@
     </div>
   </section>
 
-  <!-- PASSO 6 · Resultado -->
-  <section id="step6" class="fade hidden mx-auto mt-5 max-w-5xl">
+  <!-- PASSO 7 · Resultado (3 blocos empilhados) -->
+  <section id="step7" class="fade hidden mx-auto mt-4 max-w-[960px]">
+    <button type="button" data-back="step5" class="mb-3 rounded-lg px-1 py-1 text-sm font-bold text-slate-500 transition hover:text-slate-900">← Voltar e editar respostas</button>
+
+    <!-- BLOCO 1 · Resultado nominal -->
     <div class="overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-xl shadow-slate-900/5 md:grid md:grid-cols-5">
       <div class="md:col-span-2 bg-slate-100">
         <img id="rImg" src="./fase-40.jpg" alt="Família feliz planejando o futuro financeiro" width="900" height="672" decoding="async" onerror="this.style.visibility='hidden'" class="h-56 w-full object-cover md:h-full">
@@ -253,13 +282,51 @@
           <div>Patrimônio Total Consolidado: <strong id="rTotal" class="text-slate-900"></strong> <span class="text-xs text-slate-400">(US$ 1 = R$ 6,30)</span></div>
           <div>Nível de Dolarização: <strong id="rDolar" class="text-slate-900"></strong></div>
         </div>
-        <div class="mt-5 grid gap-2.5 sm:grid-cols-2">
-          <button type="button" id="ctaSave" class="rounded-xl bg-gradient-to-r from-blue-600 to-indigo-600 px-4 py-3 text-sm font-bold text-white shadow-lg shadow-blue-600/25 transition hover:brightness-110">Salvar meu teste</button>
-          <button type="button" id="ctaSpecialist" class="rounded-xl bg-emerald-500 px-4 py-3 text-sm font-bold text-white shadow-lg shadow-emerald-500/25 transition hover:bg-emerald-600">Falar com um especialista</button>
-          <button type="button" id="ctaRestart" class="sm:col-span-2 rounded-xl border border-slate-300 bg-white px-4 py-2.5 text-sm font-bold text-slate-700 transition hover:bg-slate-100">Recomeçar o teste</button>
-        </div>
-        <p class="mt-4 text-[11px] leading-relaxed text-slate-400">Simulação ilustrativa, não é recomendação de investimento. Horizonte de 15 anos, juros compostos mensais, câmbio estável em R$ 6,30, poupança dividida 50% no Brasil e 50% em dólar, exterior a 7% a.a. e Brasil a 10% a.a. (Muito Conservador) ou 10,4% a.a. (Moderado).</p>
       </div>
+    </div>
+
+    <!-- BLOCO 2 · Insights: renda passiva real -->
+    <div class="mt-6 rounded-2xl border border-slate-200 bg-white p-5 sm:p-7 shadow-xl shadow-slate-900/5">
+      <span class="inline-flex items-center rounded-full bg-blue-50 px-3 py-1 text-[11px] font-extrabold tracking-wider text-blue-700 ring-1 ring-blue-100">INSIGHTS • PODER DE COMPRA REAL</span>
+      <h3 class="mt-3 text-xl sm:text-2xl font-extrabold tracking-tight">Quanto o seu plano atual gera de renda passiva real</h3>
+      <div class="mt-4 grid items-center gap-3 sm:grid-cols-[1fr_auto_1fr]">
+        <div class="rounded-xl border border-slate-200 bg-slate-50 p-4 sm:p-5">
+          <div class="text-[11px] font-extrabold uppercase tracking-wider text-slate-500">Renda passiva real — Brasil (R$)</div>
+          <div class="mt-1 break-words text-2xl sm:text-3xl font-extrabold tracking-tight text-slate-900"><span id="iBRL"></span><span class="text-base font-bold text-slate-400"> /mês</span></div>
+          <p class="mt-2 text-xs text-slate-500">Equivale a um patrimônio de <strong id="iBRLpat" class="text-slate-700"></strong> em valor de hoje.</p>
+        </div>
+        <div class="grid place-items-center" aria-label="mais"><span class="grid h-9 w-9 place-items-center rounded-full bg-blue-600 text-xl font-extrabold leading-none text-white shadow-md shadow-blue-600/30">+</span></div>
+        <div class="rounded-xl bg-[#0f172a] p-4 sm:p-5 shadow-lg shadow-slate-900/20">
+          <div class="text-[11px] font-extrabold uppercase tracking-wider text-slate-300">Renda passiva real — Exterior (US$)</div>
+          <div class="mt-1 break-words text-2xl sm:text-3xl font-extrabold tracking-tight text-[#10b981]"><span id="iUSD"></span><span class="text-base font-bold text-slate-400"> /mês</span></div>
+          <p class="mt-2 text-xs text-slate-400">Equivale a um patrimônio de <strong id="iUSDpat" class="text-slate-200"></strong> em valor de hoje.</p>
+        </div>
+      </div>
+      <div class="mt-4 rounded-xl border border-slate-100 bg-slate-50/60 px-4 py-3 text-sm text-slate-600">Renda Passiva Real Total (Brasil + Exterior): <strong id="iTotal" class="text-slate-900"></strong><strong class="text-slate-900">/mês</strong> <span class="text-xs text-slate-400">(US$ 1 = R$ 6,30)</span></div>
+      <p class="mt-4 text-[11px] leading-relaxed text-slate-400">Para que o patrimônio não perca valor depois do período de acumulação, a inflação (4,5% a.a. no Brasil e 2,5% a.a. nos EUA) permanece reinvestida, e o saque mensal considera apenas os juros reais (regra sustentável de 4% real a.a.), já trazidos a valor de hoje.</p>
+    </div>
+
+    <!-- BLOCO 3 · Sua meta (planejamento reverso) -->
+    <div class="mt-6 rounded-2xl border border-slate-200 bg-white p-5 sm:p-7 shadow-xl shadow-slate-900/5">
+      <span class="inline-flex items-center rounded-full bg-blue-50 px-3 py-1 text-[11px] font-extrabold tracking-wider text-blue-700 ring-1 ring-blue-100">PLANEJAMENTO REVERSO</span>
+      <h3 id="mTitulo" class="mt-3 text-xl sm:text-2xl font-extrabold tracking-tight"></h3>
+      <div class="mt-4 rounded-2xl bg-gradient-to-br from-blue-600 to-indigo-700 p-5 sm:p-6 text-white shadow-lg shadow-blue-600/25">
+        <p class="text-sm font-semibold text-blue-100">Poupança mensal atual: <strong id="mY" class="font-extrabold text-white"></strong></p>
+        <p class="mt-3 text-base sm:text-lg font-bold leading-snug">Para atingir a sua meta de renda mensal passiva, esse é o valor que você deveria poupar todo mês →</p>
+        <div id="mX" class="mt-1 break-words text-4xl sm:text-5xl font-extrabold tracking-tight"></div>
+        <p id="mOk" class="mt-3 hidden rounded-lg bg-white/15 px-3 py-2 text-sm font-bold text-white ring-1 ring-white/20"></p>
+      </div>
+      <p id="mFoot" class="mt-4 text-[11px] leading-relaxed text-slate-400"></p>
+    </div>
+
+    <!-- AÇÕES FINAIS + disclaimer (final da página) -->
+    <div class="mt-6 rounded-2xl border border-slate-200 bg-white p-5 sm:p-7 shadow-xl shadow-slate-900/5">
+      <div class="grid gap-2.5 sm:grid-cols-2">
+        <button type="button" id="ctaSave" class="rounded-xl bg-gradient-to-r from-blue-600 to-indigo-600 px-4 py-3 text-sm font-bold text-white shadow-lg shadow-blue-600/25 transition hover:brightness-110">Salvar meu teste</button>
+        <button type="button" id="ctaSpecialist" class="rounded-xl bg-emerald-500 px-4 py-3 text-sm font-bold text-white shadow-lg shadow-emerald-500/25 transition hover:bg-emerald-600">Falar com um especialista</button>
+        <button type="button" id="ctaRestart" class="sm:col-span-2 rounded-xl border border-slate-300 bg-white px-4 py-2.5 text-sm font-bold text-slate-700 transition hover:bg-slate-100">Recomeçar o teste</button>
+      </div>
+      <p class="mt-4 text-[11px] leading-relaxed text-slate-400">Simulação ilustrativa, não é recomendação de investimento. Horizonte de 15 anos, juros compostos mensais, câmbio estável em R$ 6,30, poupança dividida 50% no Brasil e 50% em dólar, exterior a 7% a.a. e Brasil a 10% a.a. (Muito Conservador) ou 10,4% a.a. (Moderado).</p>
     </div>
   </section>
 </main>
@@ -319,6 +386,50 @@ function simular({ patrimonioBRL, patrimonioUSD, poupancaMensal, perfil }) {
 }
 
 /* =====================================================================
+   RENDA PASSIVA REAL E PLANEJAMENTO REVERSO
+   ===================================================================== */
+const INFLACAO_BR = 0.045;  // 4,5% a.a.
+const INFLACAO_US = 0.025;  // 2,5% a.a.
+const SAQUE_REAL = 0.04;    // regra de retirada sustentável: 4% real a.a.
+
+/**
+ * Bloco 2 — traz o patrimônio final a valor presente (desconta a inflação do país)
+ * e calcula a renda mensal sustentável: (VP × 4%) / 12.
+ * @returns {{vpBRL:number, rendaBRL:number, vpUSD:number, rendaUSD:number}}
+ */
+function rendaPassivaReal(finalBRL, finalUSD, anos = ANOS) {
+  const vpBRL = finalBRL / Math.pow(1 + INFLACAO_BR, anos);
+  const vpUSD = finalUSD / Math.pow(1 + INFLACAO_US, anos);
+  return { vpBRL, rendaBRL: (vpBRL * SAQUE_REAL) / 12, vpUSD, rendaUSD: (vpUSD * SAQUE_REAL) / 12 };
+}
+
+/**
+ * Bloco 3 — planejamento reverso (tudo em termos reais, valores de hoje).
+ *  1. Patrimônio alvo hoje = (renda desejada × 12) / 4%.
+ *  2. Juro real anual por Fisher: r_real = (1 + r_nominal) / (1 + inflação) - 1; depois juro real mensal.
+ *  3. Patrimônio inicial é projetado em termos reais por 180 meses e abatido do alvo (nunca abaixo de zero).
+ *  4. Aporte X (R$/mês de hoje): 50% em BRL (i_real_BR) e 50% em USD (i_real_US, câmbio fixo).
+ *     FV_real = (X/2)·A_BR + (X/2)·A_US, com A = ((1+i)^n − 1)/i  ⇒  X = falta / (0,5·A_BR + 0,5·A_US).
+ * Função pura.
+ */
+function planejamentoReverso({ patrimonioBRL, patrimonioUSD, rendaDesejada, perfil }) {
+  const n = ANOS * 12;
+  const iBR = Math.pow((1 + TAXA_BRASIL[perfil]) / (1 + INFLACAO_BR), 1 / 12) - 1;
+  const iUS = Math.pow((1 + TAXA_EXTERIOR) / (1 + INFLACAO_US), 1 / 12) - 1;
+  const alvoHoje = (rendaDesejada * 12) / SAQUE_REAL;
+  const inicialReal = patrimonioBRL * Math.pow(1 + iBR, n) + patrimonioUSD * CAMBIO * Math.pow(1 + iUS, n);
+  const falta = Math.max(0, alvoHoje - inicialReal);
+  const aBR = (Math.pow(1 + iBR, n) - 1) / iBR;
+  const aUS = (Math.pow(1 + iUS, n) - 1) / iUS;
+  const X = falta / (0.5 * aBR + 0.5 * aUS);
+  return {
+    alvoHoje, inicialReal, falta, aporteNecessario: X,
+    aporteBRL: X / 2, aporteUSD: X / 2 / CAMBIO,
+    rendaBRL: rendaDesejada / 2, rendaUSD: rendaDesejada / 2 / CAMBIO
+  };
+}
+
+/* =====================================================================
    UTILITÁRIOS
    ===================================================================== */
 const $ = id => document.getElementById(id);
@@ -334,7 +445,22 @@ function maskMoney(el, sym){
 }
 const readMoney = el => { const d = el.value.replace(/\D/g, ''); return d ? parseInt(d, 10) / 100 : 0; };
 const setMoney = (el, v, sym) => { el.value = v > 0 ? fmtMask(v, sym) : ''; };
-maskMoney($('patBRL'), 'R$'); maskMoney($('patUSD'), 'US$'); maskMoney($('poup'), 'R$');
+maskMoney($('patBRL'), 'R$'); maskMoney($('patUSD'), 'US$'); maskMoney($('poup'), 'R$'); maskMoney($('renda'), 'R$');
+const RENDA_PADRAO = 30000;
+/** Marca a pill cujo valor é igual ao digitado. */
+function syncPills(){
+  const v = readMoney($('renda'));
+  document.querySelectorAll('.pill').forEach(p => {
+    const on = Number(p.dataset.renda) === v;
+    p.classList.toggle('bg-blue-600', on); p.classList.toggle('text-white', on); p.classList.toggle('border-blue-600', on);
+    p.classList.toggle('bg-white', !on); p.classList.toggle('text-slate-700', !on); p.classList.toggle('border-slate-200', !on);
+  });
+}
+$('renda').addEventListener('input', () => { $('erro5').textContent = ''; syncPills(); });
+document.querySelectorAll('.pill').forEach(p => p.onclick = () => {
+  setMoney($('renda'), Number(p.dataset.renda), 'R$'); $('erro5').textContent = ''; syncPills();
+});
+syncPills();
 
 let toastTimer = null;
 function toast(msg, ok = true){
@@ -352,6 +478,8 @@ function track(evento, extra){
     if (S.idade !== null) props.idade_final = S.idade + ANOS;
     if (S.perfil) props.perfil_investidor = S.perfil;
     if (R) props.percentual_dolar = Math.round(R.percentualDolar * 10) / 10;
+    if (S.renda) props.renda_passiva_desejada = S.renda;
+    if (R3 && cur === 'step7') props.poupanca_mensal_necessaria = Math.ceil(R3.aporteNecessario);
     window.posthog && posthog.capture(evento, props);
   } catch (e) { console.warn('tracking', e); }
 }
@@ -360,30 +488,36 @@ function track(evento, extra){
    ESTADO E NAVEGAÇÃO
    ===================================================================== */
 const SPECIALIST_URL = 'https://wa.me/5521988108887'; // WhatsApp do especialista (DDI 55 + DDD 21 + número)
-const EMPTY = () => ({ nome: '', idade: null, patBRL: 0, patUSD: 0, poup: 0, perfil: null });
+const EMPTY = () => ({ nome: '', idade: null, patBRL: 0, patUSD: 0, poup: 0, perfil: null, renda: RENDA_PADRAO });
 let S = EMPTY();   // respostas do usuário
-let R = null;      // resultado da simulação
+let R = null;      // resultado nominal (Bloco 1)
+let R2 = null;     // renda passiva real (Bloco 2)
+let R3 = null;     // planejamento reverso (Bloco 3)
 let cur = 'step1';
 let authReturn = 'step1', pendingSave = false, trTimer = null;
-const SCREENS = ['step1', 'step2', 'step3', 'step4', 'step5', 'step6', 'telaAuth'];
+const SCREENS = ['step1', 'step2', 'step3', 'step4', 'step5', 'step6', 'step7', 'telaAuth'];
+const WIZARD_STEPS = 5;   // perguntas com barra de progresso (1 a 5); 6 = transição; 7 = resultado
 
 function go(name, opts = {}){
   clearTimeout(trTimer);
   cur = name;
   SCREENS.forEach(id => $(id).classList.toggle('hidden', id !== name));
   const n = parseInt(name.slice(4), 10);
-  const wizard = /^step[1-4]$/.test(name);
+  const wizard = /^step[1-5]$/.test(name);
   $('progress').classList.toggle('hidden', !wizard);
-  if (wizard){ $('progLabel').textContent = `Passo ${n} de 4`; $('progPct').textContent = (n * 25) + '%'; $('progBar').style.width = (n * 25) + '%'; }
-  if (name === 'step5') startTransition();
-  if (name === 'step6') renderResult(!!opts.track);
+  if (wizard){
+    const pct = Math.round(n / WIZARD_STEPS * 100);
+    $('progLabel').textContent = `Passo ${n} de ${WIZARD_STEPS}`; $('progPct').textContent = pct + '%'; $('progBar').style.width = pct + '%';
+  }
+  if (name === 'step6') startTransition();
+  if (name === 'step7') renderResult(!!opts.track);
   updateHeader();
   window.scrollTo(0, 0);
 }
 
 function startTransition(){
   const bar = $('trBar'); bar.classList.remove('fillbar'); void bar.offsetWidth; bar.classList.add('fillbar');
-  trTimer = setTimeout(() => { if (cur === 'step5') go('step6', { track: true }); }, 2500);
+  trTimer = setTimeout(() => { if (cur === 'step6') go('step7', { track: true }); }, 2500);
 }
 
 function renderResult(trackIt){
@@ -396,8 +530,30 @@ function renderResult(trackIt){
   $('rUSD').textContent = usd0(R.finalUSD);
   $('rTotal').textContent = brl0(R.totalBRL);
   $('rDolar').textContent = `${R.percentualDolar.toLocaleString('pt-BR', { maximumFractionDigits: 1 })}% do seu patrimônio protegido em dólar`;
+
+  /* Bloco 2 — renda passiva real do plano atual */
+  R2 = rendaPassivaReal(R.finalBRL, R.finalUSD);
+  $('iBRL').textContent = brl0(R2.rendaBRL);
+  $('iBRLpat').textContent = brl0(R2.vpBRL);
+  $('iUSD').textContent = usd0(R2.rendaUSD);
+  $('iUSDpat').textContent = usd0(R2.vpUSD);
+  $('iTotal').textContent = brl0(R2.rendaBRL + R2.rendaUSD * CAMBIO);
+
+  /* Bloco 3 — planejamento reverso até a renda desejada */
+  R3 = planejamentoReverso({ patrimonioBRL: S.patBRL, patrimonioUSD: S.patUSD, rendaDesejada: S.renda, perfil: S.perfil });
+  const X = Math.ceil(R3.aporteNecessario), Y = S.poup;
+  $('mTitulo').textContent = `SUA META: ${fmtMeta(S.renda)} por mês de renda passiva`;
+  $('mY').textContent = brl0(Y);
+  $('mX').textContent = brl0(X);
+  const ok = Y >= X;
+  $('mOk').classList.toggle('hidden', !ok);
+  if (ok) $('mOk').textContent = '✓ Boa notícia: o seu ritmo atual de poupança já cobre a meta de renda passiva!';
+  $('mFoot').textContent = `Premissas do cálculo: patrimônio total necessário em valor de hoje de ${brl0(R3.alvoHoje)} (renda desejada × 12 ÷ 4%). A renda passiva real da meta se divide em ${brl0(R3.rendaBRL)}/mês no Brasil + ${usd0(R3.rendaUSD)}/mês no Exterior. O cálculo considera o mesmo perfil de risco selecionado (${PERFIS[S.perfil]}), o mesmo horizonte de ${ANOS} anos, a alocação de 50% Brasil / 50% Dólar, inflação de 4,5% a.a. no Brasil e 2,5% a.a. nos EUA, regra de retirada de 4% real a.a. e câmbio estável em R$ 6,30. Todos os valores estão em poder de compra de hoje.`;
+
   if (trackIt) track('simulation_viewed');
 }
+/** "R$ 60 mil" quando múltiplo exato de mil; senão o valor monetário completo. */
+function fmtMeta(v){ return (v >= 1000 && v % 1000 === 0) ? `R$ ${fmt0(v / 1000)} mil` : fmtMask(v, 'R$'); }
 
 /* --- Passos --- */
 $('continuar').onclick = () => {
@@ -413,7 +569,12 @@ $('next4').onclick = () => {
   if (!S.perfil){ $('erro4').textContent = 'Escolha um perfil para continuar.'; return; }
   track('step_4_completed'); go('step5');
 };
-$('verResultado').onclick = () => go('step6', { track: true });
+$('next5').onclick = () => {
+  const v = readMoney($('renda'));
+  if (v <= 0){ $('erro5').textContent = 'Informe a renda passiva mensal que você gostaria de ter.'; return; }
+  S.renda = v; track('step_5_completed'); go('step6');
+};
+$('verResultado').onclick = () => go('step7', { track: true });
 document.querySelectorAll('[data-back]').forEach(b => b.onclick = () => go(b.dataset.back));
 
 function selectPerfil(p){
@@ -430,15 +591,16 @@ $('ctaSave').onclick = () => {
 };
 $('ctaSpecialist').onclick = () => {
   track('cta_specialist_clicked');
-  const msg = `Olá! Meu nome é ${S.nome}. Fiz o teste do Planejador Financeiro: aos ${S.idade + ANOS} anos terei ${brl0(R.finalBRL)} no Brasil e ${usd0(R.finalUSD)} no exterior. Quero falar com um especialista.`;
+  const msg = `Olá! Meu nome é ${S.nome}. Fiz o teste do Planejador Financeiro: aos ${S.idade + ANOS} anos terei ${brl0(R.finalBRL)} no Brasil e ${usd0(R.finalUSD)} no exterior. Minha meta é uma renda passiva de ${fmtMeta(S.renda)}/mês e o teste indicou poupar ${brl0(Math.ceil(R3.aporteNecessario))}/mês (informei ${brl0(S.poup)}). Quero falar com um especialista.`;
   const url = SPECIALIST_URL + (SPECIALIST_URL.includes('?') ? '&' : '?') + 'text=' + encodeURIComponent(msg);
   window.open(url, '_blank', 'noopener');
 };
 function resetAll(){
-  S = EMPTY(); R = null;
+  S = EMPTY(); R = null; R2 = null; R3 = null;
   ['nome', 'idade', 'patBRL', 'patUSD', 'poup'].forEach(id => $(id).value = '');
+  setMoney($('renda'), RENDA_PADRAO, 'R$'); syncPills();
   document.querySelectorAll('.perfil').forEach(b => b.classList.remove('sel'));
-  $('erro1').textContent = ''; $('erro4').textContent = '';
+  $('erro1').textContent = ''; $('erro4').textContent = ''; $('erro5').textContent = '';
 }
 $('ctaRestart').onclick = () => { track('cta_restart_clicked'); resetAll(); go('step1'); };
 
@@ -556,9 +718,13 @@ async function saveSimulation(){
   const dados = {
     versao: 2,
     horizonte_anos: ANOS,
-    inputs: { nome: S.nome, idade_atual: S.idade, patrimonio_brl: S.patBRL, patrimonio_usd: S.patUSD, poupanca_mensal_brl: S.poup, perfil: S.perfil },
+    inputs: { nome: S.nome, idade_atual: S.idade, patrimonio_brl: S.patBRL, patrimonio_usd: S.patUSD, poupanca_mensal_brl: S.poup, perfil: S.perfil, renda_passiva_desejada: S.renda },
     premissas: { cambio_usd_brl: CAMBIO, pct_poupanca_brasil: 50, pct_poupanca_exterior: 50, taxa_exterior_aa: TAXA_EXTERIOR, taxa_brasil_aa: TAXA_BRASIL[S.perfil] },
-    resultado: { idade_final: S.idade + ANOS, patrimonio_brasil_brl: R.finalBRL, patrimonio_exterior_usd: R.finalUSD, total_consolidado_brl: R.totalBRL, percentual_dolar: R.percentualDolar }
+    resultado: { idade_final: S.idade + ANOS, patrimonio_brasil_brl: R.finalBRL, patrimonio_exterior_usd: R.finalUSD, total_consolidado_brl: R.totalBRL, percentual_dolar: R.percentualDolar,
+      renda_passiva_real_brasil_brl_mes: R2.rendaBRL, renda_passiva_real_exterior_usd_mes: R2.rendaUSD,
+      patrimonio_brasil_valor_presente_brl: R2.vpBRL, patrimonio_exterior_valor_presente_usd: R2.vpUSD,
+      renda_passiva_desejada: S.renda, patrimonio_alvo_hoje_brl: R3.alvoHoje,
+      poupanca_mensal_necessaria: R3.aporteNecessario, poupanca_necessaria_brasil_brl: R3.aporteBRL, poupanca_necessaria_exterior_usd: R3.aporteUSD }
   };
   const { error } = await sb.from('simulacoes').insert({
     user_id: user.id, nome: S.nome || null, contato: user.email || null,
@@ -603,11 +769,13 @@ async function openList(){
 function loadSim(row){
   const i = row.dados_simulacao.inputs;
   S = { nome: i.nome || row.nome || '', idade: Number(i.idade_atual), patBRL: Number(i.patrimonio_brl) || 0,
-        patUSD: Number(i.patrimonio_usd) || 0, poup: Number(i.poupanca_mensal_brl) || 0, perfil: i.perfil in PERFIS ? i.perfil : 'conservador' };
+        patUSD: Number(i.patrimonio_usd) || 0, poup: Number(i.poupanca_mensal_brl) || 0, perfil: i.perfil in PERFIS ? i.perfil : 'conservador',
+        renda: Number(i.renda_passiva_desejada) > 0 ? Number(i.renda_passiva_desejada) : RENDA_PADRAO };
   $('nome').value = S.nome; $('idade').value = S.idade;
   setMoney($('patBRL'), S.patBRL, 'R$'); setMoney($('patUSD'), S.patUSD, 'US$'); setMoney($('poup'), S.poup, 'R$');
+  setMoney($('renda'), S.renda, 'R$'); syncPills();
   selectPerfil(S.perfil);
-  closeList(); go('step6', { track: true });
+  closeList(); go('step7', { track: true });
 }
 $('btnMinhas').onclick = openList;
 document.addEventListener('click', e => {
@@ -616,7 +784,7 @@ document.addEventListener('click', e => {
 document.addEventListener('keydown', e => {
   if (e.key === 'Escape') closeList();
   if (e.key === 'Enter' && !e.target.closest('form') && !e.target.closest('button')){
-    const next = { step1: 'continuar', step2: 'next2', step3: 'next3', step4: 'next4' }[cur];
+    const next = { step1: 'continuar', step2: 'next2', step3: 'next3', step4: 'next4', step5: 'next5' }[cur];
     if (next) $(next).click();
   }
 });
